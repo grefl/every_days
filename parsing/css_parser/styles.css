@@ -1,0 +1,31 @@
+<head>
+  <style>
+body {
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+  background: hsl(205deg 31% 12%);
+}
+.dot, .unknown {
+    color: red;
+  } 
+.colon, .brace {
+  color: white;
+}
+.number {
+  color: yellow;
+}
+.prop {
+  color: #FF39A8;
+}
+.value {
+  color: rgb(155, 109, 255);
+}
+.name, .tag {
+  color: #C653FF;
+}
+.symbol,.string, .keyword, .paren {
+  color: rgb(0, 190, 255);
+}
+
+  </style>
+</head>
