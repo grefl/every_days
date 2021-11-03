@@ -1,2 +1,2 @@
 #!/bin/bash
-node ./test_main.js; node ./test_words.js
+node ./misc/test_main.js; node ./misc/test_words.js
