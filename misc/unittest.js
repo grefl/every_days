@@ -15,10 +15,10 @@ function parse_stack_trace(stack_trace) {
   console.log('======================================================================')
   console.log('FAIL:')
   console.log('----------------------------------------------------------------------')
-  console.log('Traceback (most recent call last):')
+  console.error('Traceback (most recent call last):')
   const local_file_name = file_name.split('/').pop()
-  console.log(`  File "${local_file_name}", line ${line}`)
-  console.log(`    ${lines[line]}`)
+  console.error(`  File "${local_file_name}", line ${line}`)
+  console.error(`    ${lines[line]}`)
 }
 class Test {
   constructor() {
@@ -66,7 +66,7 @@ class Test {
     console.log('----------------------------------------------------------------------')
     console.log(`Ran ${this.num_tests} in ${(Date.now() - this.startTime) / 1000}`)
     if (this.num_failing_tests) {
-      console.log(`FAILED (failures=${this.num_failing_tests})`)
+      console.error(`FAILED (failures=${this.num_failing_tests})`)
     }
     if (!this.num_failing_tests) {
       console.log('OK')
