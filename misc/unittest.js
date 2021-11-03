@@ -67,7 +67,7 @@ class Test {
     console.log(`Ran ${this.num_tests} in ${(Date.now() - this.startTime) / 1000}`)
     if (this.num_failing_tests) {
       console.log(`FAILED (failures=${this.num_failing_tests})`)
-      throw new Error('Failed') 
+      process.exit(1)
     }
     if (!this.num_failing_tests) {
       console.log('OK')
