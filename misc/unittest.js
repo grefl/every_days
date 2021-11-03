@@ -53,11 +53,13 @@ class Test {
     }
   }
 
-
-  assertEqual(value_1, value_2, msg) {
+  setup(msg) {
     if (!msg) throw new Error('must inclued messsage')
     if (this.num_tests === 0) this.startTime = Date.now();
     this.num_tests +=1
+  }
+  assertEqual(value_1, value_2, msg) {
+    this.setup(msg)
     try {
       assert.strictEqual(value_1, value_2, msg) 
     }
@@ -69,9 +71,7 @@ class Test {
     }
   }
   assertNotEqual(v1, v2, msg) {
-    if (!msg) throw new Error('must inclued messsage')
-    if (this.num_tests === 0) this.startTime = Date.now();
-    this.num_tests +=1
+    this.setup(msg)
     try {
       assert.notStrictEqual(v1, v2);
     } catch(e) {
