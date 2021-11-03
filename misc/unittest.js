@@ -28,6 +28,18 @@ class Test {
    this.startTime = null
    this.endTime   = null
   }
+  assertTrue(value) {
+    if (this.num_tests === 0) this.startTime = Date.now();
+    this.num_tests +=1
+    try {
+      assert(value, '');
+    } catch(e) {
+      this.num_failing_tests +=1;
+      parse_stack_trace(e.stack)
+      let error_message = `AssertionError: ${value} is not true`  
+      console.log(error_message)
+    }
+  }
 
   assertEqual(value_1, value_2, msg) {
     if (!msg) throw new Error('must inclued messsage')
