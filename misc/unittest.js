@@ -44,6 +44,19 @@ class Test {
     }
     this.tests.push({type: 'assertEqual', values: [value_1, value_2], msg});
   }
+  assertNotEqual(v1, v2, msg) {
+    if (!msg) throw new Error('must inclued messsage')
+    if (this.num_tests === 0) this.startTime = Date.now();
+    this.num_tests +=1
+    try {
+      assert.notStrictEqual(v1, v2);
+    } catch(e) {
+      this.num_failing_tests +=1;
+      parse_stack_trace(e.stack)
+      let error_message = `AssertionError: ${v1} === ${v2} : ${msg}` 
+      console.log(error_message)
+    }
+  }
   main() {
     console.log('----------------------------------------------------------------------')
     console.log(`Ran ${this.num_tests} in ${(Date.now() - this.startTime) / 1000}`)
