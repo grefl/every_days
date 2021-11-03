@@ -28,13 +28,6 @@ class Test {
    this.startTime = null
    this.endTime   = null
   }
-  run_test(test) {
-    switch(test.type) {
-      case 'assertEqual':
-        return this.__assertEqual(test);
-      default: assert("should get this far"); 
-    }
-  }
 
   assertEqual(value_1, value_2, msg) {
     if (!msg) throw new Error('must inclued messsage')
@@ -48,19 +41,8 @@ class Test {
      parse_stack_trace(e.stack)
      let error_message = `AssertionError: ${value_1} !== ${value_2} : ${msg}` 
      console.log(error_message)
-     const keys = Object.keys(e);
-     for (const key of keys) {
-      //console.log(key, e[key]);
-
-     }
     }
     this.tests.push({type: 'assertEqual', values: [value_1, value_2], msg});
-  }
-  __assertEqual(test) {
-    if (test.values[0] !== test.values[1]) {
-      this.num_failing_tests +=1;
-      assert.strictEqual(test.values[0], test.values[1], test.msg);
-    }
   }
   main() {
     console.log('----------------------------------------------------------------------')
