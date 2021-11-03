@@ -1,5 +1,6 @@
 const assert = require('assert')
 const fs     = require('fs'); 
+
 function parse_stack_trace(stack_trace) {
   const where = stack_trace.split('\n').slice(2, 3).join('').trim()
   const start = where.indexOf('(') + 1;
@@ -24,7 +25,6 @@ class Test {
   constructor() {
    this.num_tests = 0;
    this.num_failing_tests = 0;
-   this.tests = []
    this.startTime = null
    this.endTime   = null
   }
@@ -42,7 +42,6 @@ class Test {
      let error_message = `AssertionError: ${value_1} !== ${value_2} : ${msg}` 
      console.log(error_message)
     }
-    this.tests.push({type: 'assertEqual', values: [value_1, value_2], msg});
   }
   assertNotEqual(v1, v2, msg) {
     if (!msg) throw new Error('must inclued messsage')
