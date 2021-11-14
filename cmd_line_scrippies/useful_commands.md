@@ -8,3 +8,7 @@ Search and replace. NOTE: it modifies the file due to the `-i` flag. Otherwise t
 ```
 sed -i '/pattern/replacement/' filename
 ```
+Same as above but for whole directories of files. NOTE: dangerous. Only do if you have everything in version control 
+```
+sed -i '/pattern/replacement/' dir/* 
+```
