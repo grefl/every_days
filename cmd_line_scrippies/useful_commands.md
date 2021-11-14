@@ -12,3 +12,10 @@ Same as above but for whole directories of files. NOTE: dangerous. Only do if yo
 ```
 sed -i '/pattern/replacement/' dir/* 
 ```
+
+## awk
+
+##### File line count
+```
+awk 'END{print NR}' filename
+```
