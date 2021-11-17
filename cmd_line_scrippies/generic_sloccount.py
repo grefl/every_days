@@ -37,14 +37,6 @@ class CalcLines:
     def get_file_from_web(self, url):
         return self.remote_fetch.fetch(url) 
 
-    def normalize_url(self, url):
-        if self.type == 'github':
-            end = ''.join(url.split('.com')[1].split('/blob'))
-            new_url = raw_url + end
-            return new_url
-
-        else: 
-            return url.replace('blob', 'raw')
         
     def calc_lines(self, string):
         try:
