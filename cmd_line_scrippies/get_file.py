@@ -5,7 +5,25 @@ import urllib.request
 import sys
 
 
-raw_url = "https://raw.githubusercontent.com"
+class RemoteGitFetch:
+    def __init__(self):
+        self.req = Request()
+        self.raw_url = "https://raw.githubusercontent.com"
+    
+    def fetch(self, url):
+        headers = {'Accept': 'application/json' }
+        normalized_url = self.normalize_url(url)
+        return self.req.get(normalized_url, {'data': None, 'headers': headers}) 
+
+    def normalize_url(self, url):
+        if 'github' in url:
+            end = ''.join(url.split('.com')[1].split('/blob'))
+            new_url = self.raw_url + end
+            return new_url
+
+        else: 
+            return url.replace('blob', 'raw')
+
 
 class Request():
   def __init__(self):
@@ -42,14 +60,9 @@ def fetch_and_write():
     elif args_len == 3:
             url, file_name = sys.argv[1]
 
-    end = ''.join(url.split('.com')[1].split('/blob'))
-    new_url = raw_url + end
-    print(end)
-    req = Request()
-    headers = {'Accept': 'application/json' }
-    options = {'data': None, 'headers': headers}
     file_name = file_name if file_name else url.split('/').pop()
-    res = req.get(new_url,options) 
+    req = RemoteGitFetch()
+    res = req.fetch(url) 
     with open(f"./{file_name}", 'w+') as f:
       f.write(res)
       print(f'finished writing {file_name}')
