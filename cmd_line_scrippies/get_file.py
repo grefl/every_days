@@ -58,7 +58,7 @@ def fetch_and_write():
     elif args_len == 2:
             url = sys.argv[1]
     elif args_len == 3:
-            url, file_name = sys.argv[1]
+            url, file_name = sys.argv[1:]
 
     file_name = file_name if file_name else url.split('/').pop()
     req = RemoteGitFetch()
