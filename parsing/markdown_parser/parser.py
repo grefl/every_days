@@ -18,9 +18,11 @@ def main():
     string = Path(f'./{file_name}').read_text()
     p = Parser(str(string))
     p.parse()
-
+def peek_text(text,i):
+    if i == len(text) -1:
+        return None 
+    return text[i + 1]
 def parse_line(text):
-    print(text)
     start = 0
     i = 0
     IN = True
@@ -28,6 +30,8 @@ def parse_line(text):
     double = False
     state = OUT
     temp = []
+    bracket = [-1, -1]
+    parens  = [-1, -1]
     while i < len(text):
         char = text[i]
         if char == '*' and state == OUT:
@@ -55,9 +59,39 @@ def parse_line(text):
             i +=1
             continue
         elif char == '[':
+            second_brackets = -1
+            failed = False
+            copy_i = i
+            mini_i = 0
+            temp_chars = []
+            temp_chars.append(None)
+            while copy_i < len(text):
+                copy_char = text[copy_i]
+                if copy_char == ']':
+                    peeked = peek_text(text, copy_i)
+                    if not peeked or peeked != '(':
+                        failed = True
+                        break 
+                    second_brackets = mini_i 
+                elif copy_char == ')':
+                    temp.append(f'''<a href="{''.join(temp_chars[second_brackets+3:])}">''')
+                    i_i = 2
+                    while i_i <= second_brackets:
+                        temp.append(temp_chars[i_i])
+                        i_i +=1
+                    temp.append('</a>')
+                    i = copy_i + 1
+                    break
+                temp_chars.append(text[copy_i])
+                mini_i +=1
+                copy_i +=1
+            if copy_i == len(text) or failed:
+                continue
+
+        if i > len(text) -1:
+            break
         temp.append(text[i])
         i +=1
-    parsed_text = text
     return ''.join(temp) 
 
 def create_header(index,text):
