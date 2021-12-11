@@ -22,6 +22,7 @@ def peek_text(text,i):
     if i == len(text) -1:
         return None 
     return text[i + 1]
+
 def parse_line(text):
     start = 0
     i = 0
@@ -30,8 +31,6 @@ def parse_line(text):
     double = False
     state = OUT
     temp = []
-    bracket = [-1, -1]
-    parens  = [-1, -1]
     while i < len(text):
         char = text[i]
         if char == '*' and state == OUT:
@@ -39,12 +38,17 @@ def parse_line(text):
             start = i
             if i +1 < len(text) and text[i+1] == '*':
                 double = True
+                start -=1
+                i +=1
+                continue
 
         elif char == "*" and state == IN:
             if double:
                 if i +1 < len(text) and text[i+1] == '*':
-                    temp[start] = '<strong'
-                    temp[start+1] = '>'
+                    offset = -1
+                    if start == 0:
+                        offset = 0
+                    temp[start -offset] = '<strong>'
                     state = OUT
                     temp.append('</strong>')
                     i +=2
@@ -65,7 +69,7 @@ def parse_line(text):
             mini_i = 0
             temp_chars = []
             temp_chars.append(None)
-            while copy_i < len(text):
+            while copy_i < len(text) and not failed:
                 copy_char = text[copy_i]
                 if copy_char == ']':
                     peeked = peek_text(text, copy_i)
@@ -86,6 +90,9 @@ def parse_line(text):
                 mini_i +=1
                 copy_i +=1
             if copy_i == len(text) or failed:
+                for el in temp_chars[1:]:
+                    i +=1
+                    temp.append(el)
                 continue
 
         if i > len(text) -1:
@@ -128,7 +135,6 @@ class Parser():
         while self.line < self.len:
             text = self.text[self.line]
             i = 0 
-
             if len(text) == 0:
                 self.line +=1
                 continue
@@ -156,13 +162,19 @@ class Parser():
                 # man this is bad
                 self.parse_list()
                 continue
+            elif self.char == '*' and peek_text(text, i) == '*':
+                print('weeee')
+                print(parse_line(text))
+                self.html.append(parse_line(text))
+                self.line +=1
+                continue
             else:
                 self.html.append(parse_line(text))
             self.line +=1
         finished = Path('./res.html')
         finished.write_text('\n'.join(self.html)) 
-if __name__ == '__main__':
 
+if __name__ == '__main__':
     main()
 
 
