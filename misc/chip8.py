@@ -11,7 +11,7 @@ I = 0
 
 # 16 * 8bit registers
 # V0->VF
-reg = [0] * 16
+reg = bytearray(16) 
 
 # Memory 4 kilobytes or 4096 bytes
 # Notes on memory
