@@ -1,9 +1,11 @@
 import sys 
-import os
+# import os
 
-LINUX   = sys.platform.startswith("linux")
-WINDOWS = os.name == "nt"
-MACOS   = sys.platform.startswith("darwin") 
+platform = sys.platform
+LINUX    = platform.startswith("linux") 
+# WINDOWS = os.name == "nt"
+WINDOWS  = platform.startswith("win32") or platform.startswith("cywin") 
+MACOS    = platform.startswith("darwin") 
 
 if LINUX:
     print("It's linux")
