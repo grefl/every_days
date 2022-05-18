@@ -1,4 +1,4 @@
-const INVALID_ELEMENTS = ['SCRIPT', "HTML", "META", "TITLE", "LINK", "BODY", "DATA" ,"HEAD"]
+const INVALID_ELEMENTS = ['SCRIPT', "HTML", "META", "TITLE", "LINK", "BODY", "DATA" ,"HEAD", "CODE", "PRE"]
 function isInViewport(element) {
   const rect = element.getBoundingClientRect();
   const height = innerHeight || document.documentElement.clientHeight;
