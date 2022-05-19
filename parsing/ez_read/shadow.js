@@ -13,20 +13,6 @@ const INVALID_ELEMENTS = [
   "VIDEO",
 ];
 
-export function recursive(element, container) {
-  const shadow = element.nodeName === "#text"
-    ? document.createElement("span")
-    : document.createElement(element.tagName);
-  if (element.nodeName === "#text") {
-    shadow.innerText = element.nodeValue;
-  }
-
-  for (const child of element.childNodes) {
-    recursive(child, shadow);
-  }
-  container.appendChild(shadow);
-}
-
 const create = (type) => document.createElement(type);
 
 function bold(text) {
