@@ -52,7 +52,7 @@ export function replace(element) {
     }
     if (child.nodeName === "#text" && child.nodeValue.trim().length) {
       const shadow = document.createElement("span");
-      const spans = ez_text(child.nodeValue);
+      const spans = ez_text(child.nodeValue.trim() + ' ');
       for (const span of spans) {
         shadow.appendChild(span);
       }
