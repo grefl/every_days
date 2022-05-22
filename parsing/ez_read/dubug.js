@@ -64,6 +64,42 @@ export function replace(element) {
     }
   }
 }
+function callback(deadline) {
+  let shouldYield = false;
+  while(queue.length && !shouldYield) {
+    replace2(queue.pop());
+    shouldYield = deadline.timeRemaining() < 1;
+  }
+  if (!queue.length) {
+    return;
+  }
+  requestIdleCallback(callback)
+}
+
+export function replace2(element) {
+  for (const child of element.childNodes) {
+    if (INVALID_ELEMENTS.includes(child.tagName)) {
+      //console.log(element.tagName);
+      continue;
+    }
+    if (child.nodeName === "#text" && child.nodeValue.trim().length) {
+      const shadow = document.createElement("span");
+      const spans = ez_text(child.nodeValue.trim() + ' ');
+      for (const span of spans) {
+        shadow.appendChild(span);
+      }
+      child.replaceWith(shadow);
+    } else {
+      queue.push(child);
+    }
+  }
+}
+
+let queue = [];
+for (const child of document.body.childNodes) {
+  queue.push(child);
+} 
+requestIdleCallback(callback)
 
 function isInViewport(element) {
   const rect = element.getBoundingClientRect();
