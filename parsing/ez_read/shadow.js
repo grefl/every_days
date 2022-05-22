@@ -11,6 +11,7 @@ const INVALID_ELEMENTS = [
   "STYLE",
   "IMG",
   //"PRE",
+  "SVG",
   "VIDEO",
 ];
 
@@ -42,13 +43,14 @@ function ez_text(text) {
   }
   return spans;
 }
+
 export function replace(element) {
   for (const child of element.childNodes) {
     if (INVALID_ELEMENTS.includes(child.tagName)) {
       console.log(element.tagName);
       continue;
     }
-    if (child.nodeName === "#text") {
+    if (child.nodeName === "#text" && child.nodeValue.trim().length) {
       const shadow = document.createElement("span");
       const spans = ez_text(child.nodeValue);
       for (const span of spans) {
