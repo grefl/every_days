@@ -14,8 +14,10 @@ const INVALID_ELEMENTS = [
   "BUTTON",
   "A",
   //"PRE",
+  "SVG",
   "VIDEO",
 ];
+
 const create = (type) => document.createElement(type);
 
 function bold(text) {
@@ -44,20 +46,21 @@ function ez_text(text) {
   }
   return spans;
 }
+
 function replace(element) {
-  // if (outsideViewport(element)) return;
   for (const child of element.childNodes) {
     if (INVALID_ELEMENTS.includes(child.tagName)) {
+      console.log(element.tagName);
       continue;
     }
-    if (child.nodeName === "#text") {
+    if (child.nodeName === "#text" && child.nodeValue.trim().length) {
       const shadow = document.createElement("span");
-      const spans = ez_text(child.nodeValue);
+      const spans = ez_text(child.nodeValue.trim() + ' ');
       for (const span of spans) {
         shadow.appendChild(span);
       }
       child.replaceWith(shadow);
-    } else { 
+    } else {
       replace(child);
     }
   }

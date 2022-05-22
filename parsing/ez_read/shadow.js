@@ -10,6 +10,8 @@ const INVALID_ELEMENTS = [
   "HEADER",
   "STYLE",
   "IMG",
+  "NAV",
+  "BUTTON",
   //"PRE",
   "SVG",
   "VIDEO",
