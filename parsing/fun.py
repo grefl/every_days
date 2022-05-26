@@ -1,9 +1,30 @@
 #!/bin/env python3 
 from pathlib import Path
 from dataclasses import dataclass
-from enum import Enum
+from enum import Enum, EnumMeta
 from pprint import pprint
 
+class WhoopsPythonEnumsSuck(EnumMeta): 
+    def __contains__(cls, item): 
+        try:
+            cls(item)
+        except ValueError:
+            return False
+        else:
+            return True
+
+
+# Keywords = dict([
+#     ('function', TokenType.Function),
+#     'return',
+#     'let',
+#     'none',
+#     'true',
+#     'false',
+#     'if',
+#     'while',
+#     'for'
+# ])
 # class Keywords(Enum):
 #     Function = 'function'
 #     Return   = 'return'
@@ -24,41 +45,47 @@ from pprint import pprint
 #         else:
 #             return True
 
+def is_ascii_numeric(c):
+    ascii_decimal = ord(c)
+    return (ascii_decimal >= 48 and ascii_decimal <= 57)
+
 def is_ascii_alphanumeric(c):
 
     ascii_decimal = ord(c) 
 
     return (ascii_decimal >= 48 <= 57) | (ascii_decimal >= 65 and ascii_decimal <= 91) or (ascii_decimal >= 97 and ascii_decimal <= 122)  
 
-class TokenType(Enum):
-    LeftParen  = 0 
-    RightParen = 1 
-    LeftBrace  = 2 
-    RightBrace = 3 
-    Asign      = 4 
-    Rubbish    = 5 
-    Name       = 5 
+class TokenType(Enum, metaclass=WhoopsPythonEnumsSuck):
+    LeftParen   = 0 
+    RightParen  = 1 
+    LeftBrace   = 2 
+    RightBrace  = 3 
+    Asign       = 4 
+    Rubbish     = 5 
+    Name        = 6 
+    Number      = 7 
+    DoubleQuote = 8 
+    SingleQuote = 9 
 
     # So I might get rid of these and just call them 'Name' 
     # and figure out which one is in the parser. But I'm not sure,
     # it makes sense that I should identify the type of keyword now, since this will happen eventually 
     # NOTE(greg) Note to self, I change my mind just use 'Name'
-    Function   =   6
-    Return     =   7 
-    Let        =   8 
-    None_      =   9 
-    True_      =   10 
-    False_     =   11 
-    If         =   12 
-    While      =   13 
-    For        =   14 
+    Function    =   'function' 
+    Return      =   'return' 
+    Let         =   'let' 
+    None_       =   'none' 
+    True_       =   'true' 
+    False_      =   'false' 
+    If          =   'if' 
+    While       =   'while' 
+    For         =   'for' 
+    Println     =   'println'
 
 
 def consume_while(file_str, index, predicate):
     things = []
     while index < len(file_str) and predicate(c := file_str[index]):
-        print('things')
-        print(c, index, things)
         things.append(c)
         index +=1
     return "".join(things), index
@@ -105,19 +132,35 @@ def lex(file_id, file_str):
             output.append(token)
             index +=1 
         elif is_ascii_alphanumeric(c):
-            thing, index = consume_while(file_str, index, is_ascii_alphanumeric)
-            token = None
-            if thing in Keywords:
-                token= Token(file_id, Name, thing)
+            # thing, index = consume_while(file_str, index, is_ascii_alphanumeric)
+            token, index = lex_thing(file_id, file_str, index)
+            # token = None
+            # if thing in TokenType:
+            #     token= Token(file_id, TokenType(thing), thing)
+            # else:
+            #     token = Token(file_id, TokenType.Rubbish, thing)
             output.append(token)
-            print('is ascii')
         else:
             index +=1
     return output
 
+def lex_thing(file_id, file_str, index):
+    c = file_str[index]
+    if is_ascii_numeric(c):
+        thing, index = consume_while(file_str, index, is_ascii_numeric) 
+        token = Token(file_id, TokenType.Number,thing)
+        return token, index
+    else:
+        thing, index = consume_while(file_str, index, is_ascii_alphanumeric)
+        if thing in TokenType:
+            token= Token(file_id, TokenType(thing), thing)
+        else:
+            token = Token(file_id, TokenType.Name, thing)
+        return token, index 
 
 def main():
     file_string = Path('./test.fake').read_text()
     pprint(lex('./test.fake', file_string))
+
 if __name__ == '__main__':
     main()
