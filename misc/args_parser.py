@@ -44,5 +44,5 @@ def tickets_search(args, amount = 100):
 if __name__ == "__main__":
     test_args = '--time-from=2008-07-20T22:55:29Z --time-to=2008-07-20T22:55:29Z'
     def wrapper():
-        tickets_search(get_args(test_args))
-    bench(wrapper, 200)
+        tickets_search(get_args(test_args), 200000)
+    bench(wrapper, 20)
