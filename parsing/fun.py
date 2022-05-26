@@ -2,7 +2,7 @@
 from pathlib import Path
 from dataclasses import dataclass
 from enum import Enum, EnumMeta
-from pprint import pprint
+from pprint import pprint, pformat
 
 class WhoopsPythonEnumsSuck(EnumMeta): 
     def __contains__(cls, item): 
@@ -70,6 +70,10 @@ class TokenType(Enum, metaclass=WhoopsPythonEnumsSuck):
     Plus        = "+"
     Minus       = "-"
     Exclamation = '!'
+    Pipe        = "|"
+    And         = "&"
+    Carrot      = "^" 
+    Colon       = ":" 
 
     # So I might get rid of these and just call them 'Name' 
     # and figure out which one is in the parser. But I'm not sure,
@@ -147,6 +151,18 @@ def lex(file_id, file_str):
             token = Token(file_id, TokenType.Minus, c)
             output.append(token)
             index +=1 
+        elif c == '|':
+            token = Token(file_id, TokenType.Plus, c)
+            output.append(token)
+            index +=1
+        elif c == '^':
+            token = Token(file_id, TokenType.Carrot, c)
+            output.append(token)
+            index +=1
+        elif c == '&':
+            token = Token(file_id, TokenType.And, c)
+            output.append(token)
+            index +=1
         elif is_ascii_alphanumeric(c):
             # thing, index = consume_while(file_str, index, is_ascii_alphanumeric)
             token, index = lex_thing(file_id, file_str, index)
@@ -166,6 +182,7 @@ def lex(file_id, file_str):
 
 def lex_thing(file_id, file_str, index):
     c = file_str[index]
+
     if is_ascii_numeric(c):
         thing, index = consume_while(file_str, index, is_ascii_numeric) 
         token = Token(file_id, TokenType.Number,thing)
@@ -180,7 +197,9 @@ def lex_thing(file_id, file_str, index):
 
 def main():
     file_string = Path('./test.fake').read_text()
-    pprint(lex('./test.fake', file_string))
+    lexed = lex('./test.fake', file_string)
+    pprint(lexed)
+    Path("./res.txt").write_text(pformat(lexed))
 
 if __name__ == '__main__':
     main()
