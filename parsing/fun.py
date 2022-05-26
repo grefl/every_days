@@ -70,7 +70,7 @@ class TokenType(Enum, metaclass=WhoopsPythonEnumsSuck):
     # So I might get rid of these and just call them 'Name' 
     # and figure out which one is in the parser. But I'm not sure,
     # it makes sense that I should identify the type of keyword now, since this will happen eventually 
-    # NOTE(greg) Note to self, I change my mind just use 'Name'
+    # NOTE(greg) Note to self, if I change my mind just use 'Name'
     Function    =   'function' 
     Return      =   'return' 
     Let         =   'let' 
