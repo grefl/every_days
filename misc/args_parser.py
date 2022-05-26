@@ -5,7 +5,7 @@ SUPPORTED_ARGS = ['--time-from', '--time-to']
 
 def check_args_or_fail(args_split):
     if any(True if arg not in args_split else False for arg in SUPPORTED_ARGS):
-        for args in SUPPORTED_ARGS:
+        for arg in SUPPORTED_ARGS:
             if arg not in args_split:
                 print(f"Missing [{arg}]")
         return True
