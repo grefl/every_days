@@ -142,6 +142,10 @@ def lex(file_id, file_str):
             output.append(token)
         else:
             index +=1
+            if c == ' ' or c == '\n':
+                continue
+            token = Token(file_id, TokenType.Rubbish, c)
+            output.append(token)
     return output
 
 def lex_thing(file_id, file_str, index):
