@@ -67,6 +67,10 @@ class TokenType(Enum, metaclass=WhoopsPythonEnumsSuck):
     DoubleQuote = 8 
     SingleQuote = 9 
 
+    Plus        = "+"
+    Minus       = "-"
+    Exclamation = '!'
+
     # So I might get rid of these and just call them 'Name' 
     # and figure out which one is in the parser. But I'm not sure,
     # it makes sense that I should identify the type of keyword now, since this will happen eventually 
@@ -129,6 +133,18 @@ def lex(file_id, file_str):
             index +=1 
         elif c == '=':
             token = Token(file_id, TokenType.Asign, c)
+            output.append(token)
+            index +=1 
+        elif c == '!':
+            token = Token(file_id, TokenType.Exclamation, c)
+            output.append(token)
+            index +=1 
+        elif c == '+':
+            token = Token(file_id, TokenType.Plus, c)
+            output.append(token)
+            index +=1 
+        elif c == '-':
+            token = Token(file_id, TokenType.Minus, c)
             output.append(token)
             index +=1 
         elif is_ascii_alphanumeric(c):
