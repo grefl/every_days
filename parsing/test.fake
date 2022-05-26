@@ -1,0 +1,8 @@
+function read() {
+    return none 
+}
+
+let test = read()
+if test {
+    println("Success!")
+}
