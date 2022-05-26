@@ -1,11 +1,11 @@
 import time
 
-def bench(compute, count =  1000):
+def bench(compute, count =  10):
     print('----------------------------------------------------------')
     print('----------------------BENCHMARKING------------------------')
     print('----------------------------------------------------------')
-    st = time.monotonic()
     for i in range(count):
+        st = time.monotonic()
         compute()
-    et = time.monotonic() - st
-    print(f"{et* 1000:.2f}: ms {(et/1000)* 1000}: seconds")
+        et = time.monotonic() - st
+        print(f"{et* 1000:.2f}: ms {(et/1000)* 1000}: seconds")
