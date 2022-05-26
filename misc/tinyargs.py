@@ -1,7 +1,5 @@
 #!/bin/env python3
 import unittest
-from basic_bench import bench
-DEBUG = True
 
 def check_args_or_fail(args_split, supported_args):
     if any(True if arg not in args_split else False for arg in supported_args):
@@ -41,8 +39,5 @@ class TestArgs(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-    # benchmarking
-    if DEBUG:
-        bench(wrapper, 20)
 
 
