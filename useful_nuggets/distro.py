@@ -1,3 +1,4 @@
+#!/bin/env python3
 import subprocess
 
 
@@ -16,7 +17,11 @@ def parse_to_end(bytestring):
         string.append(c)
     return ''.join(string)
 
-def id():
+def distro_id():
+    """
+    Gets the distro id. In my case, it prints -> "Pop" since I'm on Pop os
+    """
+
     cmd = ("lsb_release", "-i")
     stdout = subprocess.check_output(cmd, stderr=subprocess.DEVNULL)
 
@@ -26,4 +31,4 @@ def id():
     print(parse_to_end(stdout[index:]))
 
 
-id()
+distro_id()
