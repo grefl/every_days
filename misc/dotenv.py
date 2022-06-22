@@ -49,12 +49,8 @@ def check_for_existing_env(string):
 
 def parse_value(value, index_start = 0):
     index = index_of(value, '$', index_start)
-    if index is None:
-        return value
 
-    existing_env_var = check_for_existing_env(value) 
-
-    return parse_value(existing_env_var, index + 1) if existing_env_var else value
+    return parse_value(check_for_existing_env(value), index + 1) if index is not None else value
 
 # ============================
 #       Start program 
