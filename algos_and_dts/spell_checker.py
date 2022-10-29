@@ -1,3 +1,16 @@
+# -------------------------------------------
+# Notes:
+# Written after reading about spell checkers
+# made with dynamic programming.
+# Nothing fancy. Basically the same algorithm
+# as the text books.
+# -------------------------------------------
+# Links:
+# ----------------------------------------------------------------------------------------------------------------
+# https://people.cs.pitt.edu/~kirk/cs1501/Pruhs/Spring2006/assignments/editdistance/Levenshtein%20Distance.htm
+# https://medium.com/@ethannam/understanding-the-levenshtein-distance-equation-for-beginners-c4285a5604f0
+# ----------------------------------------------------------------------------------------------------------------
+
 LEVENSHTEIN_MODE = True 
 
 def check_word_levenshtein(words: [str, str]) -> str:
